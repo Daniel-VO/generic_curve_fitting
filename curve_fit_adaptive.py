@@ -1,5 +1,5 @@
 """
-Created 18. March 2022 by Daniel Van Opdenbosch, Technical University of Munich
+Created 13. November 2023 by Daniel Van Opdenbosch, Technical University of Munich
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. It is distributed without any warranty or implied warranty of merchantability or fitness for a particular purpose. See the GNU general public license for more details: <http://www.gnu.org/licenses/>
 """
@@ -19,10 +19,9 @@ log=open('results.log','a')
 for f in glob.glob('*.csv'):
 	filename=os.path.splitext(f)[0]
 	x,y=np.genfromtxt(f,delimiter=',',unpack=True,skip_header=1,usecols=(0,2),encoding='iso-8859-1')
-	args=np.where((x>100)&(x<800))
-	x=x[args]
-	y=y[args]
-	y-=y[0]
+	# ~ args=np.where((x>100)&(x<800))
+	# ~ x=x[args];y=y[args]
+	# ~ y-=y[0]
 
 	def basis(baseline):
 		return baseline*np.ones(len(x))
@@ -35,7 +34,7 @@ for f in glob.glob('*.csv'):
 	Kriterium=1e-5	#Anpassen
 	Konvergenz=Kriterium+1
 	tau,i,params=0,0,lm.Parameters()
-	params.add('baseline',0,vary=False)
+	params.add('baseline',0)
 	while Konvergenz>Kriterium:
 		i+=1
 		for n in range(i):
